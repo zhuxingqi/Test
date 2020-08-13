@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace必须为对应dao接口的全类名
+ -->
+<mapper namespace="dao.StudentDao">
+	<!--<select id="selectAll" resultType="com.czxy.demo1.domain.User">
+		select * from user
+	</select> -->
+	<delete id="deleteStudentById">
+		DELETE from student
+		<where>
+			<if test="slist!=null">
+				<foreach collection="slist" item="sid" open="and sid in(" separator="," close=")">
+					#{sid}
+				</foreach>
+			</if>
+		</where>
+	</delete>
+
+	<select id="selectByTeam" resultType="domain.Student">
+     select * from student
+     <where>
+		 <if test="slist!=null">
+			 <foreach collection="slist" item="sid" open="and sid in(" separator="," close=")">
+				 #{sid}
+			 </foreach>
+		 </if>
+		 <if test="sname!=null and sname!=''">
+			 or sname = #{sname}
+		 </if>
+		 <if test="sex!=null and sex!='' ">
+			 AND sex = #{sex}
+		 </if>
+		 <if test="age=!null and age!='' and age2!=null and age2!=''">
+			 and age BETWEEN #{age} and #{age2}
+		 </if>
+	 </where>
+	</select>
+
+</mapper>
